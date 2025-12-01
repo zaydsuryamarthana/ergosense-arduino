@@ -2,12 +2,13 @@
 #include <LiquidCrystal_I2C.h>
 #include <NewPing.h>
 
-#define trigPin 9
-#define echoPin 10
+#define trigPin 12
+#define echoPin 11 
 #define ledRed 2
 #define ledGreen 3
 #define caliBtn 5
 #define maxDistance 200
+#define buzzer 6
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 NewPing sonar(trigPin, echoPin, maxDistance);
@@ -63,7 +64,7 @@ void loop()
   lcd.setCursor(0,0);
   lcd.print("SAFE ");
   lcd.print(idealDistance);
-  lcd.print("cm | ");
+  lcd.print("cm|");
   lcd.print(currentDist);
   lcd.print("cm");
 
@@ -87,9 +88,9 @@ void loop()
   else
   {
     if(badPosture == 0) badPosture = millis();
-
+    
     lcd.setCursor(0,1);
-    lcd.print("TERLALU JAUH!");
+    lcd.print("ALERT! : ");
     lcd.print((millis() - badPosture)/1000);
     lcd.print("s ");
 
