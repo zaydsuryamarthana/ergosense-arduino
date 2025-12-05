@@ -19,6 +19,81 @@ bool warningActive = false;
 const int tolerance = 10;
 const int threshold = 5000;
 
+void calibrate()
+{
+  do
+  {
+    digitalWrite(ledGreen, LOW);
+
+    lcd.clear();
+    lcd.backlight();
+
+    lcd.setCursor(0, 0);
+    lcd.print("MULAI KALIBRASI!");
+
+    Serial.print("\nMEMULAI KALIBRASI!");
+
+    for (int i = 9; i > 0; i--)
+    {
+      lcd.setCursor(0, 1);
+      lcd.print("DALAM: ");
+      lcd.print(i);
+      lcd.print("s");
+
+      digitalWrite(ledRed, HIGH);
+      delay(200);
+      digitalWrite(ledRed, LOW);
+      delay(800);
+    }
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("SEDANG KALIBRASI!");
+
+    Serial.print("\nSEDANG KALIBRASI!");
+
+    long total = 0;
+
+    for (int i = 0; i < 10; i++)
+    {
+      total += sonar.ping_cm();
+      lcd.setCursor(0, 1);
+      lcd.print("JARAK : ");
+      lcd.print(total);
+      delay(50);
+    }
+
+    idealDistance = total / 10;
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("HASIL KALIBRASI");
+    lcd.setCursor(0, 1);
+    lcd.print("JARAK : ");
+    lcd.print(idealDistance);
+    lcd.print(" cm");
+
+    digitalWrite(ledGreen, HIGH);
+
+    delay(3000);
+    lcd.clear();
+
+  } while (idealDistance <= tolerance);
+}
+
+void trigger()
+{
+  digitalWrite(ledGreen, LOW);
+  digitalWrite(ledRed, HIGH);
+}
+
+void reset()
+{
+  badPosture = 0;
+  digitalWrite(ledRed, LOW);
+  digitalWrite(ledGreen, HIGH);
+}
+
 void setup()
 {
   lcd.init();
@@ -129,79 +204,4 @@ void loop()
   }
 
   delay(100);
-}
-
-void calibrate()
-{
-  do
-  {
-    digitalWrite(ledGreen, LOW);
-
-    lcd.clear();
-    lcd.backlight();
-
-    lcd.setCursor(0, 0);
-    lcd.print("MULAI KALIBRASI!");
-
-    Serial.print("\nMEMULAI KALIBRASI!");
-
-    for (int i = 9; i > 0; i--)
-    {
-      lcd.setCursor(0, 1);
-      lcd.print("DALAM: ");
-      lcd.print(i);
-      lcd.print("s");
-
-      digitalWrite(ledRed, HIGH);
-      delay(200);
-      digitalWrite(ledRed, LOW);
-      delay(800);
-    }
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("SEDANG KALIBRASI!");
-
-    Serial.print("\nSEDANG KALIBRASI!");
-
-    long total = 0;
-
-    for (int i = 0; i < 10; i++)
-    {
-      total += sonar.ping_cm();
-      lcd.setCursor(0, 1);
-      lcd.print("JARAK : ");
-      lcd.print(total);
-      delay(50);
-    }
-
-    idealDistance = total / 10;
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("HASIL KALIBRASI");
-    lcd.setCursor(0, 1);
-    lcd.print("JARAK : ");
-    lcd.print(idealDistance);
-    lcd.print(" cm");
-
-    digitalWrite(ledGreen, HIGH);
-
-    delay(3000);
-    lcd.clear();
-
-  } while (idealDistance <= tolerance);
-}
-
-void trigger()
-{
-  digitalWrite(ledGreen, LOW);
-  digitalWrite(ledRed, HIGH);
-}
-
-void reset()
-{
-  badPosture = 0;
-  digitalWrite(ledRed, LOW);
-  digitalWrite(ledGreen, HIGH);
 }

@@ -10,14 +10,15 @@
             "includePath": [
                 "C:/Users/Admin/Documents/GitHub/ergosense-arduino/include",
                 "C:/Users/Admin/Documents/GitHub/ergosense-arduino/src",
-                "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328/NewPing/src",
+                "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328new/LiquidCrystal_I2C",
+                "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328new/NewPing/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 ""
             ],
             "browse": {
@@ -25,14 +26,15 @@
                 "path": [
                     "C:/Users/Admin/Documents/GitHub/ergosense-arduino/include",
                     "C:/Users/Admin/Documents/GitHub/ergosense-arduino/src",
-                    "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328/NewPing/src",
+                    "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328new/LiquidCrystal_I2C",
+                    "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "C:/Users/Admin/Documents/GitHub/ergosense-arduino/.pio/libdeps/nanoatmega328new/NewPing/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                    "C:/Users/Admin/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     ""
                 ]
             },
