@@ -59,26 +59,21 @@ void loop()
   if (currentDist < (idealDistance - tolerance))
   {
     if (badPosture == 0) badPosture = millis();
-    
+
     if (millis() - badPosture > threshold) 
     {
       status = "BAHAYA";
-      digitalWrite(ledGreen, LOW);
-      digitalWrite(ledRed, HIGH);
+      trigger();
     } 
     else 
     {
       status = "WARNING";
-      digitalWrite(ledGreen, LOW);
-      digitalWrite(ledRed, HIGH);
     }
   }
   else if (currentDist >= (idealDistance - tolerance) && currentDist <= (idealDistance + tolerance + 20))
   {
-    badPosture = 0;
     status = "AMAN";
-    digitalWrite(ledRed, LOW);
-    digitalWrite(ledGreen, HIGH);
+    reset();
   }
   else
   {
@@ -87,14 +82,12 @@ void loop()
     if (millis() - badPosture > threshold)
     {
       status = "STANDBY";
-      digitalWrite(ledRed, LOW);
-      digitalWrite(ledGreen, LOW);
+      standby();
     }
     else
     {
       status = "JAUH";
-      digitalWrite(ledRed, LOW);
-      digitalWrite(ledGreen, HIGH);
+      trigger();
     }
   }
 
@@ -113,6 +106,17 @@ void calibrate()
   long total = 0;
   int validReadings = 0;
 
+  for (int i = 10; i > 0; i--)
+  {
+    Serial.print("0,CALIB_"); 
+    Serial.println(i);
+
+    digitalWrite(ledRed, HIGH);
+    delay(200);
+    digitalWrite(ledRed, LOW);
+    delay(800);
+  }
+
   for (int i = 0; i < 10; i++)
   {
     int reading = sonar.ping_cm();
@@ -127,9 +131,9 @@ void calibrate()
     Serial.println("CALIBRATING");
     
     digitalWrite(ledRed, HIGH);
-    delay(50);
+    delay(100);
     digitalWrite(ledRed, LOW);
-    delay(50);
+    delay(100); 
   }
 
   if (validReadings > 0)
@@ -146,4 +150,20 @@ void calibrate()
   Serial.print(",");
   Serial.println("CALIBRATED");
   delay(1000);
+}
+
+void trigger(){
+  digitalWrite(ledGreen, LOW);
+  digitalWrite(ledRed, HIGH);
+}
+
+void reset(){
+  badPosture = 0;
+  digitalWrite(ledRed, LOW);
+  digitalWrite(ledGreen, HIGH);
+}
+
+void standby(){
+  digitalWrite(ledRed, LOW);
+  digitalWrite(ledGreen, LOW);
 }
