@@ -1,11 +1,13 @@
 #include <Arduino.h>
 #include <NewPing.h>
+#include <EEPROM.h>
 
 #define trigPin 12
 #define echoPin 11
 #define ledRed 2
 #define ledGreen 3
 #define caliBtn 5
+#define EEPROM_ADDR 0
 #define maxDistance 200
 
 NewPing sonar(trigPin, echoPin, maxDistance);
@@ -15,6 +17,9 @@ unsigned long badPosture = 0;
 const int tolerance = 10;
 const int threshold = 5000;
 
+void calibrate();
+
+
 void setup()
 {
   Serial.begin(9600);
@@ -23,8 +28,14 @@ void setup()
   pinMode(ledRed, OUTPUT);
   pinMode(ledGreen, OUTPUT);
 
+  int saveDist = 0;
+  EEPROM.get(EEPROM_ADDR, saveDist);
+
+  idealDistance = saveDist;
+  Serial.print(idealDistance);
+  Serial.println(",CALIBRATED_MEM");
+
   delay(3000);
-  calibrate();
 }
 
 void loop()
@@ -84,11 +95,6 @@ void loop()
       status = "STANDBY";
       standby();
     }
-    else
-    {
-      status = "JAUH";
-      trigger();
-    }
   }
 
   Serial.print(currentDist);
@@ -139,6 +145,8 @@ void calibrate()
   if (validReadings > 0)
   {
     idealDistance = total / validReadings;
+
+    EEPROM.put(EEPROM_ADDR, idealDistance);
   }
   else
   {
